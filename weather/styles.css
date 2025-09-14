@@ -263,6 +263,30 @@ footer {
   margin-top: auto;
   font-size: 0.9rem;
 }
+.market-info {
+  font-size: 0.95rem;
+  color: #154734;
+  margin: 1rem 0;
+  background: #e8f9f0;              /* light green background */
+  border: 2px dashed #27ae60;       /* dashed border like a notice */
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+  line-height: 1.5;
+  text-align: left;
+  font-weight: 500;
+  position: relative;
+}
+
+.market-info::before {
+  content: "📘";
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.hidden {
+  display: none !important;
+}
+
+
 
 /* ----------------------------
    Animations
