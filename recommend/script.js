@@ -183,6 +183,19 @@ async function getRainfall(lat, lon) {
     return null;
   }
 }
+function showAutofillMessage(inputId, message) {
+  const input = document.getElementById(inputId);
+  let note = input.parentElement.querySelector(".autofill-note");
+
+  if (!note) {
+    note = document.createElement("div");
+    note.className = "autofill-note";
+    input.parentElement.appendChild(note);
+  }
+
+  note.textContent = message;  // update message permanently
+}
+
 
 
 
@@ -205,12 +218,15 @@ document.getElementById("city").addEventListener("change", async () => {
 document.getElementById("ph").value = soil.ph;
 document.getElementById("soil_type").value = soil.soilType;
 
-console.log(`Auto-filled Soil Data for ${city}: pH=${soil.ph}, Type=${soil.soilType}`);
+showAutofillMessage("ph", `Auto-filled pH: ${soil.ph}`);
+showAutofillMessage("soil_type", `Auto-selected Soil: ${soil.soilType}`);
 
 // Step D: get rainfall
 const rain = await getRainfall(coords.lat, coords.lon);
 if (rain) {
   document.getElementById("rain_next30").value = rain;
-  console.log(`Auto-filled Rainfall for ${city}: ${rain} mm (next 30 days)`);
-} 
+  showAutofillMessage("rain_next30", `Auto-filled Rainfall: ${rain} mm`);
+}
+
+ 
 });
