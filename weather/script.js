@@ -1,88 +1,4 @@
 // ------------------------------
-// Mock Weather Data (7-day forecast)
-// ------------------------------
-const weatherData = {
-  Ranchi: [
-    { day: "Mon", temp: "28°C", rain: "60%", icon: "🌦️" },
-    { day: "Tue", temp: "29°C", rain: "20%", icon: "☀️" },
-    { day: "Wed", temp: "30°C", rain: "10%", icon: "☀️" },
-    { day: "Thu", temp: "27°C", rain: "70%", icon: "🌧️" },
-    { day: "Fri", temp: "26°C", rain: "80%", icon: "🌧️" },
-    { day: "Sat", temp: "28°C", rain: "50%", icon: "🌦️" },
-    { day: "Sun", temp: "29°C", rain: "40%", icon: "🌦️" }
-  ],
-  Dhanbad: [
-    { day: "Mon", temp: "31°C", rain: "30%", icon: "☀️" },
-    { day: "Tue", temp: "32°C", rain: "40%", icon: "🌦️" },
-    { day: "Wed", temp: "30°C", rain: "50%", icon: "🌦️" },
-    { day: "Thu", temp: "29°C", rain: "60%", icon: "🌧️" },
-    { day: "Fri", temp: "28°C", rain: "70%", icon: "🌧️" },
-    { day: "Sat", temp: "31°C", rain: "20%", icon: "☀️" },
-    { day: "Sun", temp: "32°C", rain: "30%", icon: "🌦️" }
-  ],
-  Hazaribagh: [
-    { day: "Mon", temp: "27°C", rain: "55%", icon: "🌦️" },
-    { day: "Tue", temp: "28°C", rain: "35%", icon: "🌦️" },
-    { day: "Wed", temp: "29°C", rain: "25%", icon: "☀️" },
-    { day: "Thu", temp: "27°C", rain: "65%", icon: "🌧️" },
-    { day: "Fri", temp: "26°C", rain: "75%", icon: "🌧️" },
-    { day: "Sat", temp: "28°C", rain: "45%", icon: "🌦️" },
-    { day: "Sun", temp: "29°C", rain: "35%", icon: "🌦️" }
-  ],
-  Bokaro: [
-    { day: "Mon", temp: "30°C", rain: "20%", icon: "☀️" },
-    { day: "Tue", temp: "31°C", rain: "30%", icon: "🌦️" },
-    { day: "Wed", temp: "30°C", rain: "40%", icon: "🌦️" },
-    { day: "Thu", temp: "29°C", rain: "50%", icon: "🌧️" },
-    { day: "Fri", temp: "28°C", rain: "60%", icon: "🌧️" },
-    { day: "Sat", temp: "30°C", rain: "25%", icon: "☀️" },
-    { day: "Sun", temp: "31°C", rain: "35%", icon: "🌦️" }
-  ],
-  Giridih: [
-    { day: "Mon", temp: "29°C", rain: "40%", icon: "🌦️" },
-    { day: "Tue", temp: "30°C", rain: "30%", icon: "☀️" },
-    { day: "Wed", temp: "31°C", rain: "20%", icon: "☀️" },
-    { day: "Thu", temp: "29°C", rain: "55%", icon: "🌧️" },
-    { day: "Fri", temp: "28°C", rain: "65%", icon: "🌧️" },
-    { day: "Sat", temp: "29°C", rain: "45%", icon: "🌦️" },
-    { day: "Sun", temp: "30°C", rain: "35%", icon: "🌦️" }
-  ]
-};
-
-// ------------------------------
-// Mock Market Data (₹ per quintal)
-// ------------------------------
-const marketData = {
-  Ranchi: [
-    { crop: "Paddy", price: 1800, trend: "⬆️ Rising" },
-    { crop: "Wheat", price: 2200, trend: "➡️ Stable" },
-    { crop: "Maize", price: 1600, trend: "⬇️ Falling" },
-    { crop: "Mustard", price: 4200, trend: "⬆️ Rising" }
-  ],
-  Dhanbad: [
-    { crop: "Paddy", price: 1750, trend: "➡️ Stable" },
-    { crop: "Wheat", price: 2150, trend: "⬆️ Rising" },
-    { crop: "Soybean", price: 3600, trend: "⬇️ Falling" },
-    { crop: "Groundnut", price: 5000, trend: "⬆️ Rising" }
-  ],
-  Hazaribagh: [
-    { crop: "Maize", price: 1700, trend: "⬆️ Rising" },
-    { crop: "Lentil", price: 4500, trend: "➡️ Stable" },
-    { crop: "Pigeon Pea", price: 5200, trend: "⬆️ Rising" }
-  ],
-  Bokaro: [
-    { crop: "Wheat", price: 2100, trend: "⬇️ Falling" },
-    { crop: "Paddy", price: 1780, trend: "➡️ Stable" },
-    { crop: "Sunflower", price: 4200, trend: "⬆️ Rising" }
-  ],
-  Giridih: [
-    { crop: "Mustard", price: 4300, trend: "⬆️ Rising" },
-    { crop: "Blackgram", price: 5200, trend: "⬆️ Rising" },
-    { crop: "Potato", price: 1500, trend: "➡️ Stable" }
-  ]
-};
-
-// ------------------------------
 // DOM Elements
 // ------------------------------
 const districtSelect = document.getElementById("district");
@@ -91,32 +7,119 @@ const weatherCards = document.getElementById("weatherCards");
 const marketTable = document.querySelector("#marketTable tbody");
 const weatherSection = document.getElementById("weatherSection");
 const marketSection = document.getElementById("marketSection");
+// ------------------------------
+// Populate State & District Dropdowns
+// ------------------------------
+const stateSelect = document.getElementById("state");
+
+// Fill State dropdown
+// Fill State dropdown
+for (const state in indiaData) {
+  const opt = document.createElement("option");
+  opt.value = state;
+  opt.textContent = state;
+  stateSelect.appendChild(opt);
+}
+
+// When a state is selected → populate districts
+stateSelect.addEventListener("change", function () {
+  const state = this.value;
+  districtSelect.innerHTML = "<option value='' disabled selected>-- Select District --</option>";
+
+  if (indiaData[state]) {
+    indiaData[state].forEach(district => {
+      const opt = document.createElement("option");
+      opt.value = district;
+      opt.textContent = district;
+      districtSelect.appendChild(opt);
+    });
+  }
+});
+
+
 
 // ------------------------------
-// Event Listener
+// Fetch Weather Data (Open-Meteo)
 // ------------------------------
-showDashboardBtn.addEventListener("click", () => {
-  const district = districtSelect.value;
-  if (!district) {
-    alert("Please select a district.");
-    return;
+async function getWeather(lat, lon) {
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,precipitation_sum&timezone=auto&forecast_days=7`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    return data.daily.time.map((day, i) => ({
+      day: new Date(day).toLocaleDateString("en-IN", { weekday: "short" }),
+      temp: `${Math.round(data.daily.temperature_2m_max[i])}°C`,
+      rain: `${Math.round(data.daily.precipitation_sum[i])} mm`,
+      icon: data.daily.precipitation_sum[i] > 2 ? "🌧️" : "☀️"
+    }));
+  } catch (err) {
+    console.error("Weather API error:", err);
+    return [];
+  }
+}
+
+// ------------------------------
+// Fetch Market Prices (data.gov.in API)
+// ------------------------------
+// ⚠️ Replace YOUR_API_KEY with a real one from https://data.gov.in
+// --- Market Prices Fetch ---
+async function getMarketPrices(district) {
+  try {
+    const apiKey = "579b464db66ec23bdd000001735e622832744f1d65bf16e06123577b"; // replace with your valid key
+    const url = `https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=${apiKey}&format=json&filters[district]=${district.toUpperCase()}&limit=10`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log("Market API raw:", data);
+
+    if (!data.records || data.records.length === 0) {
+      return [];
+    }
+
+    return data.records.map(r => ({
+      crop: r.commodity,
+      price: r.modal_price,
+      market: r.market
+    }));
+  } catch (err) {
+    console.error("Market API error:", err);
+    return [];
+  }
+}
+
+// --- Render Market Prices ---
+function renderMarket(market) {
+  const marketTable = document.querySelector("#marketTable tbody");
+  const marketSection = document.getElementById("marketSection");
+
+  marketTable.innerHTML = "";
+  if (market.length) {
+    market.forEach(m => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${m.crop}</td>
+        <td>₹${m.price}</td>
+        <td>${m.market}</td>
+      `;
+      marketTable.appendChild(row);
+    });
+  } else {
+    marketTable.innerHTML = "<tr><td colspan='3'>No market data available for this district.</td></tr>";
   }
 
-  renderWeather(district);
-  renderMarket(district);
-
-  // Show sections once data is loaded
-  weatherSection.classList.remove("hidden");
+  // Show section
   marketSection.classList.remove("hidden");
-});
+}
+
 
 // ------------------------------
 // Render Weather
 // ------------------------------
-function renderWeather(district) {
+function renderWeather(weather) {
   weatherCards.innerHTML = "";
-  if (weatherData[district]) {
-    weatherData[district].forEach(d => {
+  if (weather.length) {
+    weather.forEach(d => {
       const card = document.createElement("div");
       card.className = "weather-card";
       card.innerHTML = `
@@ -128,17 +131,17 @@ function renderWeather(district) {
       weatherCards.appendChild(card);
     });
   } else {
-    weatherCards.innerHTML = "<p>No forecast available for this district.</p>";
+    weatherCards.innerHTML = "<p>No forecast available.</p>";
   }
 }
 
 // ------------------------------
 // Render Market
 // ------------------------------
-function renderMarket(district) {
+function renderMarket(market) {
   marketTable.innerHTML = "";
-  if (marketData[district]) {
-    marketData[district].forEach(m => {
+  if (market.length) {
+    market.forEach(m => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${m.crop}</td>
@@ -149,5 +152,62 @@ function renderMarket(district) {
     });
   } else {
     marketTable.innerHTML = "<tr><td colspan='3'>No market data available.</td></tr>";
+  }
+}
+
+// ------------------------------
+// Event Listener
+// ------------------------------
+showDashboardBtn.addEventListener("click", async () => {
+  const district = districtSelect.value;
+  if (!district) {
+    alert("Please select a district.");
+    return;
+  }
+
+  // Get coordinates
+  // Get coordinates dynamically from Nominatim
+const state = document.getElementById("state").value;
+const coords = await getLatLon(district, state);
+
+if (!coords) {
+  alert("Could not fetch coordinates for " + district);
+  return;
+}
+
+// Fetch APIs
+const weather = await getWeather(coords.lat, coords.lon);
+
+  const market = await getMarketPrices(district);
+
+  // Render data
+  renderWeather(weather);
+  renderMarket(market);
+
+  // Show sections
+  weatherSection.classList.remove("hidden");
+  marketSection.classList.remove("hidden");
+});
+// --- Function to get lat/lon from Nominatim ---
+async function getLatLon(city, state) {
+  const query = `${city} district, ${state}, India`;
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": "KrishiSaathi/1.0 (your-email@example.com)", // replace with your email
+        "Accept-Language": "en"
+      }
+    });
+    const data = await res.json();
+    if (data.length > 0) {
+      return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+    } else {
+      throw new Error("Location not found");
+    }
+  } catch (err) {
+    console.error("Nominatim error:", err);
+    return null;
   }
 }
