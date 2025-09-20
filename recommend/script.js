@@ -162,7 +162,7 @@ return { ph, soilType };
 }
 // --- 2b. Function to fetch Rainfall data ---
 async function getRainfall(lat, lon) {
-  const proxy = "https://api.allorigins.win/raw?url="; 
+  const proxy = "https://api.allorigins.win/get?url="; 
   const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
   const url = proxy + encodeURIComponent(apiUrl);  
 
@@ -230,5 +230,6 @@ if (rain) {
 
  
 });
+
 
 
