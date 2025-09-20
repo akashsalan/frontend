@@ -161,27 +161,31 @@ return { ph, soilType };
   }
 }
 // --- 2b. Function to fetch Rainfall data ---
+// --- Rainfall with AllOrigins JSON mode ---
 async function getRainfall(lat, lon) {
+  const proxy = "https://api.allorigins.win/get?url="; 
   const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
+  const url = proxy + encodeURIComponent(apiUrl);
 
   try {
     const res = await fetch(url);
-    const data = await res.json();
+    const wrapper = await res.json();   // wrapper contains .contents
+    const data = JSON.parse(wrapper.contents); // parse inner string
 
     if (!data.daily || !data.daily.precipitation_sum) {
-      console.warn("No rainfall data available");
+      console.warn("⚠️ No rainfall data available");
       return null;
     }
 
-    // sum rainfall for next 30 days
+    // sum rainfall over the days returned (max 16)
     const totalRainfall = data.daily.precipitation_sum.reduce((a, b) => a + b, 0);
-    return Math.round(totalRainfall); // mm
+    return Math.round(totalRainfall); // integer, no decimal
   } catch (err) {
     console.error("Rainfall API error:", err);
     return null;
   }
 }
+
 function showAutofillMessage(inputId, message) {
   const input = document.getElementById(inputId);
   let note = input.parentElement.querySelector(".autofill-note");
@@ -229,6 +233,7 @@ if (rain) {
 
  
 });
+
 
 
 
