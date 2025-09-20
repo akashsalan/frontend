@@ -160,7 +160,6 @@ return { ph, soilType };
     return null;
   }
 }
-// --- 2b. Function to fetch Rainfall data ---
 async function getRainfall(lat, lon) {
   const proxy = "https://api.allorigins.win/get?url="; 
   const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
@@ -168,10 +167,14 @@ async function getRainfall(lat, lon) {
 
   try {
     const res = await fetch(url);
-    const wrapper = await res.json();   // { contents: "..." }
+    const wrapper = await res.json();
     const data = JSON.parse(wrapper.contents);
 
     console.log("Rainfall raw response:", data);
+
+    // 🔎 Add debug
+    console.log("Rainfall daily:", data.daily);
+    console.log("Rainfall sums:", data.daily?.precipitation_sum);
 
     if (!data.daily || !data.daily.precipitation_sum) {
       console.warn("⚠️ No rainfall data available");
@@ -179,12 +182,15 @@ async function getRainfall(lat, lon) {
     }
 
     const totalRainfall = data.daily.precipitation_sum.reduce((a, b) => a + b, 0);
+    console.log("Total rainfall mm:", totalRainfall);
+
     return Math.round(totalRainfall);
   } catch (err) {
     console.error("Rainfall API error:", err);
     return null;
   }
 }
+
 
 function showAutofillMessage(inputId, message) {
   const input = document.getElementById(inputId);
@@ -233,5 +239,6 @@ if (rain) {
 
  
 });
+
 
 
