@@ -169,7 +169,10 @@ async function getRainfall(lat, lon) {
 
   try {
     const res = await fetch(url);
-    const wrapper = await res.json();   // wrapper contains .contents
+    const wrapper = await res.json(); // wrapper contains .contents
+    console.log("Rainfall API full URL:", url);
+console.log("Rainfall wrapper:", wrapper);
+
     const data = JSON.parse(wrapper.contents); // parse inner string
 
     if (!data.daily || !data.daily.precipitation_sum) {
@@ -228,11 +231,13 @@ showAutofillMessage("soil_type", `Auto-selected Soil: ${soil.soilType}`);
 const rain = await getRainfall(coords.lat, coords.lon);
 if (rain) {
   document.getElementById("rain_next30").value = rain;
-  showAutofillMessage("rain_next30", `Auto-filled Rainfall: ${rain} mm`);
+  console.log(`Auto-filled Rainfall for ${city}: ${rain} mm (next 16 days)`);
 }
+
 
  
 });
+
 
 
 
