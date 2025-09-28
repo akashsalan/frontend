@@ -222,7 +222,12 @@ body {
 .btn-mic:hover {
   background: #e67e22;
 }
-
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
 /* ----------------------------
    Footer
 ----------------------------- */
@@ -305,10 +310,23 @@ footer {
     flex-direction: row;      /* stay horizontal */
     justify-content: space-between;
   }
+}
+@media (max-width: 600px) {
   .nav-links {
-    flex-direction: row;      /* keep links in one line */
-    flex-wrap: wrap;          /* allow wrapping to next line if too many */
-    gap: 0.8rem;
+    display: none;
+    flex-direction: column;
+    background: #2ecc71;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
   }
 }
 
@@ -326,5 +344,6 @@ footer {
   from { transform: translateX(20px); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
 }
+
 
 
