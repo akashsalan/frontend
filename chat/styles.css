@@ -321,7 +321,6 @@ footer {
     right: 0;
     width: 100%;
     padding: 1rem;
-     text-align: center;
   }
   .nav-links.active {
     display: flex;
@@ -345,7 +344,5 @@ footer {
   from { transform: translateX(20px); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
 }
-
-
 
 
