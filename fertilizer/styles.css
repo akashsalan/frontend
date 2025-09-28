@@ -23,7 +23,7 @@ body {
 /* Hamburger menu button */
 .menu-toggle {
   display: none;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #fff;
   cursor: pointer;
 }
@@ -302,13 +302,9 @@ footer {
     font-size: 1.1rem;
   }
 }
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
+@media (max-width: 600px) {
   .nav-links {
-    display: none; /* hide by default */
+    display: none;
     flex-direction: column;
     background: #2ecc71;
     position: absolute;
@@ -316,12 +312,12 @@ footer {
     right: 0;
     width: 100%;
     padding: 1rem;
-    gap: 1rem;
-    text-align: center;
-    z-index: 1000;
   }
-
   .nav-links.active {
-    display: flex; /* show when toggled */
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
   }
 }
+
