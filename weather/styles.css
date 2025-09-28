@@ -175,12 +175,14 @@ select:focus {
    Weather Cards
 ----------------------------- */
 .weather-cards {
-  display: flex;                 /* make row */
+  display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  overflow-x: auto;              /* allow scroll on small screens */
+  overflow-x: auto;
+  max-width: 100%;      /* prevent overflow */
   padding-bottom: 0.5rem;
 }
+
 
 .weather-card {
   flex: 0 0 140px;               /* fixed card width */
@@ -220,8 +222,12 @@ select:focus {
 .market-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  font-size: 0.95rem;
+   table-layout: auto;   /* prevent fixed overflow */
+  word-wrap: break-word;
+}
+.market-section,
+#marketSection {
+  overflow-x: auto;     /* allow horizontal scroll on small screens */
 }
 
 .market-table th,
@@ -380,6 +386,20 @@ footer {
 
   .menu-toggle {
     display: block;
+  }
+}
+@media (max-width: 480px) {
+  .market-table th,
+  .market-table td {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+    white-space: nowrap; /* keep compact */
+  }
+
+  /* Wrap table inside a scrollable div */
+  .market-table {
+    display: block;
+    overflow-x: auto;
   }
 }
 
