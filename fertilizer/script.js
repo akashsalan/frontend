@@ -339,3 +339,10 @@ form.addEventListener("submit", (e) => {
     resultSection.innerHTML = `<p class="error">No data available for ${fert} in ${crop}.</p>`;
   }
 });
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.querySelector(".nav-links");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
