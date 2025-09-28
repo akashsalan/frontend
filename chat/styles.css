@@ -302,15 +302,16 @@ footer {
 }
 @media (max-width: 600px) {
   .navbar {
-    flex-direction: column;
-    gap: 0.8rem;
-    text-align: center;
+    flex-direction: row;      /* stay horizontal */
+    justify-content: space-between;
   }
-
   .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;      /* keep links in one line */
+    flex-wrap: wrap;          /* allow wrapping to next line if too many */
+    gap: 0.8rem;
   }
+}
+
 
 @media (max-width: 600px) {
   .chat-container {
@@ -325,4 +326,5 @@ footer {
   from { transform: translateX(20px); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
 }
+
 
