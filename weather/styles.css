@@ -20,6 +20,13 @@ body {
 /* ----------------------------
    Navbar
 ----------------------------- */
+/* Hamburger button */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -310,11 +317,7 @@ footer {
    Responsive Design
 ----------------------------- */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 0.8rem;
-    text-align: center;
-  }
+
 
   .hero-text h1 {
     font-size: 2rem;
@@ -334,10 +337,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
 
   .hero-text h1 {
     font-size: 1.6rem;
@@ -356,3 +355,31 @@ footer {
     padding: 0.6rem;
   }
 }
+/* Mobile navbar */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #2ecc71;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
