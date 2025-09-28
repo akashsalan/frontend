@@ -263,11 +263,6 @@ footer {
    Responsive Design
 ----------------------------- */
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 0.8rem;
-    text-align: center;
-  }
 
   .fertilizer-container {
     margin: 1rem;
@@ -303,6 +298,11 @@ footer {
   }
 }
 @media (max-width: 600px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .nav-links {
     display: none;
     flex-direction: column;
@@ -312,12 +312,16 @@ footer {
     right: 0;
     width: 100%;
     padding: 1rem;
+    text-align: center;
   }
+
   .nav-links.active {
     display: flex;
   }
+
   .menu-toggle {
     display: block;
   }
 }
+
 
