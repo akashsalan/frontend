@@ -78,10 +78,14 @@ async function getMarketPrices(district) {
     }
 
     return data.records.map(r => ({
-      crop: r.commodity,
-      price: r.modal_price,
-      market: r.market
-    }));
+  crop: r.commodity,
+  price: r.modal_price,
+  market: r.market,
+  date: r.arrival_date,
+  minPrice: r.min_price,
+  maxPrice: r.max_price
+}));
+
   } catch (err) {
     console.error("Market API error:", err);
     return [];
@@ -146,14 +150,17 @@ function renderMarket(market) {
       row.innerHTML = `
         <td>${m.crop}</td>
         <td>₹${m.price}</td>
-        <td>${m.trend}</td>
+        <td>${m.market}</td>
+        <td>${m.date}</td>
+        <td>₹${m.minPrice} – ₹${m.maxPrice}</td>
       `;
       marketTable.appendChild(row);
     });
   } else {
-    marketTable.innerHTML = "<tr><td colspan='3'>No market data available.</td></tr>";
+    marketTable.innerHTML = "<tr><td colspan='5'>No market data available for this district.</td></tr>";
   }
 }
+
 
 // ------------------------------
 // Event Listener
@@ -216,3 +223,4 @@ async function getLatLon(city, state) {
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
+
