@@ -93,28 +93,6 @@ async function getMarketPrices(district) {
 }
 
 // --- Render Market Prices ---
-function renderMarket(market) {
-  const marketTable = document.querySelector("#marketTable tbody");
-  const marketSection = document.getElementById("marketSection");
-
-  marketTable.innerHTML = "";
-  if (market.length) {
-    market.forEach(m => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${m.crop}</td>
-        <td>₹${m.price}</td>
-        <td>${m.market}</td>
-      `;
-      marketTable.appendChild(row);
-    });
-  } else {
-    marketTable.innerHTML = "<tr><td colspan='3'>No market data available for this district.</td></tr>";
-  }
-
-  // Show section
-  marketSection.classList.remove("hidden");
-}
 
 
 // ------------------------------
@@ -223,4 +201,5 @@ async function getLatLon(city, state) {
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
+
 
