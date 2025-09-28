@@ -61,7 +61,8 @@ body {
    Chat Container
 ----------------------------- */
 .chat-container {
-  flex: 1;
+  height: 80vh;
+   max-height: 90vh;
   max-width: 800px;
   margin: 1rem auto;
   display: flex;
@@ -76,7 +77,9 @@ body {
 .chat-header {
   background: #27ae60;
   color: #fff;
-  padding: 1rem;
+   padding: 0.8rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   text-align: center;
 }
 
@@ -142,16 +145,17 @@ body {
 
 /* User bubble */
 .message.user .bubble {
-  background: #2ecc71;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
   color: #fff;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
 }
 
 /* Bot bubble */
 .message.bot .bubble {
-  background: #eaeaea;
+   background: #f1f3f4;
   color: #333;
-  border-bottom-left-radius: 4px;
+   border-bottom-left-radius: 6px;
+   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 /* ----------------------------
@@ -164,14 +168,17 @@ body {
   padding: 0.8rem 1rem;
   border-top: 1px solid #ddd;
   background: #fff;
+   position: sticky;
+  bottom: 0;
+  z-index: 10;
 }
 
 .chat-input input {
   flex: 1;
   padding: 0.7rem 1rem;
-  border-radius: 20px;
+  border-radius: 25px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  font-size: 0.95rem;
   outline: none;
   transition: border 0.3s ease, box-shadow 0.3s ease;
 }
@@ -257,8 +264,8 @@ footer {
   }
 
   .btn {
-    padding: 0.5rem 0.7rem;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
   }
 }
 
@@ -283,3 +290,17 @@ footer {
     flex-direction: column;
     gap: 0.5rem;
   }
+
+@media (max-width: 600px) {
+  .chat-container {
+    height: 100vh;
+    border-radius: 0; /* no rounded corners on mobile for a native feel */
+  }
+}
+   .message {
+  animation: fadeUp 0.4s ease, slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
