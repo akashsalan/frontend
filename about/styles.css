@@ -20,6 +20,13 @@ body {
 /* ----------------------------
    Navbar (reuse global style)
 ----------------------------- */
+/* Hamburger button */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -215,5 +222,32 @@ footer {
   }
   .about-container ul li {
     font-size: 0.9rem;
+  }
+}
+/* Mobile navbar */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #2ecc71;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 }
