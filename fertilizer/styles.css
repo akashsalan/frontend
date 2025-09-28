@@ -20,6 +20,13 @@ body {
 /* ----------------------------
    Navbar
 ----------------------------- */
+/* Hamburger menu button */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #fff;
+  cursor: pointer;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -281,10 +288,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
 
   .form-group label {
     font-size: 0.85rem;
@@ -297,5 +300,28 @@ footer {
 
   .result-card h3 {
     font-size: 1.1rem;
+  }
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none; /* hide by default */
+    flex-direction: column;
+    background: #2ecc71;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+    text-align: center;
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    display: flex; /* show when toggled */
   }
 }
