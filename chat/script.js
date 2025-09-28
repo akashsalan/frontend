@@ -178,3 +178,7 @@ function speakText(text) {
   utterance.lang = "en-IN"; // change to "hi-IN" for Hindi output
   speechSynthesis.speak(utterance);
 }
+document.getElementById("menuToggle").addEventListener("click", () => {
+  document.querySelector(".nav-links").classList.toggle("active");
+});
+
