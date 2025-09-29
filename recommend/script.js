@@ -162,10 +162,10 @@ return { ph, soilType };
 }
 // --- 2b. Function to fetch Rainfall data ---
 async function getRainfall(lat, lon) {
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=30`;
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
 
   try {
-    const res = await fetch(apiUrl);   // ✅ Direct call, no proxy
+    const res = await fetch(apiUrl);
     const data = await res.json();
 
     console.log("Rainfall raw response:", data);
@@ -175,16 +175,21 @@ async function getRainfall(lat, lon) {
       return null;
     }
 
-    // sum rainfall for next 30 days
-    const totalRainfall = data.daily.precipitation_sum.reduce((a, b) => a + b, 0);
-    console.log("✅ Total rainfall mm:", totalRainfall);
+    // Sum 16 days
+    const total16 = data.daily.precipitation_sum.reduce((a, b) => a + b, 0);
 
-    return Math.round(totalRainfall);
+    // Approximate 30 days by scaling (16 → 30)
+    const total30 = (total16 / 16) * 30;
+
+    console.log("✅ Total rainfall estimate (30 days):", total30);
+
+    return Math.round(total30); // mm
   } catch (err) {
     console.error("Rainfall API error:", err);
     return null;
   }
 }
+
 
 
 
@@ -240,6 +245,7 @@ const menuToggle = document.getElementById("menuToggle");
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
+
 
 
 
