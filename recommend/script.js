@@ -111,12 +111,8 @@ async function getLatLon(city, state) {
 
 // --- 2. Function to fetch SoilGrids data ---
 async function getSoilData(lat, lon) {
-  const url = `https://rest.isric.org/soilgrids/v2.0/properties/query
-  ?lat=${lat}
-  &lon=${lon}
-  &property=phh2o,sand,silt,clay
-  &depth=0-5cm
-  &value=mean`;
+  const url = `https://rest.isric.org/soilgrids/v2.0/properties/query?lat=${lat}&lon=${lon}&property=phh2o,sand,silt,clay&depth=0-5cm&value=mean`;
+
 
   try {
     const res = await fetch(url);
@@ -244,6 +240,7 @@ const menuToggle = document.getElementById("menuToggle");
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
+
 
 
 
