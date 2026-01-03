@@ -111,49 +111,55 @@ async function getLatLon(city, state) {
 
 // --- 2. Function to fetch SoilGrids data ---
 async function getSoilData(lat, lon) {
-  const url = `https://rest.isric.org/soilgrids/v2.0/properties/query?lat=${lat}&lon=${lon}&property=bdod&property=cec&property=cfvo&property=clay&property=nitrogen&property=ocd&property=ocs&property=phh2o&property=sand&property=silt&property=soc&property=wv0010&property=wv0033&property=wv1500&depth=0-5cm&value=mean`;
+  const url = `https://rest.isric.org/soilgrids/v2.0/properties/query?lat=${lat}&lon=${lon}
+&property=bdod&property=cec&property=cfvo&property=clay
+&property=nitrogen&property=ocd&property=ocs&property=phh2o
+&property=sand&property=silt&property=soc
+&property=wv0010&property=wv0033&property=wv1500
+&depth=0-5cm&value=mean`;
+
 
   try {
     const res = await fetch(url);
-
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("SoilGrids API failed:", text);
-      return null;
-    }
-
     const data = await res.json();
     console.log("SoilGrids raw response:", data);
 
     const layers = data?.properties?.layers;
-    if (!layers) return null;
-
-    const phLayer = layers.find(l => l.name === "phh2o");
-    const sandLayer = layers.find(l => l.name === "sand");
-    const siltLayer = layers.find(l => l.name === "silt");
-    const clayLayer = layers.find(l => l.name === "clay");
-
-    if (!phLayer || !sandLayer || !siltLayer || !clayLayer) {
-      return { ph: "6.5", soilType: "loam" };
+    if (!layers) {
+      console.warn("No soil data layers available");
+      return null;
     }
 
-    const ph = (phLayer.depths[0].values.mean / 10).toFixed(1);
-    const sand = sandLayer.depths[0].values.mean / 10;
-    const silt = siltLayer.depths[0].values.mean / 10;
-    const clay = clayLayer.depths[0].values.mean / 10;
+    // find phh2o layer
+   const phLayer = layers.find(l => l.name === "phh2o");
+const sandLayer = layers.find(l => l.name === "sand");
+const siltLayer = layers.find(l => l.name === "silt");
+const clayLayer = layers.find(l => l.name === "clay");
 
-    let soilType = "loam";
-    if (sand > 70) soilType = "sandy_loam";
-    else if (clay > 35) soilType = "clay_loam";
+if (!phLayer || !sandLayer || !siltLayer || !clayLayer) {
+  console.warn("Some soil properties missing, using defaults");
+  return { ph: "6.5", soilType: "loam" }; // fallback defaults
+}
 
-    return { ph, soilType };
+const phRaw = phLayer.depths[0].values.mean;
+const ph = phRaw ? (phRaw / 10).toFixed(1) : "6.5";
+
+const sand = sandLayer.depths[0].values.mean ? sandLayer.depths[0].values.mean / 10 : 40;
+const silt = siltLayer.depths[0].values.mean ? siltLayer.depths[0].values.mean / 10 : 40;
+const clay = clayLayer.depths[0].values.mean ? clayLayer.depths[0].values.mean / 10 : 20;
+
+// classify soil type
+let soilType = "loam";
+if (sand > 70) soilType = "sandy_loam";
+else if (clay > 35) soilType = "clay_loam";
+
+return { ph, soilType };
 
   } catch (err) {
     console.error("SoilGrids error:", err);
     return null;
   }
 }
-
 // --- 2b. Function to fetch Rainfall data ---
 async function getRainfall(lat, lon) {
   const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=precipitation_sum&timezone=auto&forecast_days=16`;
@@ -239,9 +245,6 @@ const menuToggle = document.getElementById("menuToggle");
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
-
-
-
 
 
 
